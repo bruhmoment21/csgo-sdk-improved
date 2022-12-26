@@ -48,10 +48,11 @@ void Hooks::Initialize()
     ::SDK_HookGraphicsAPI();
 
     void *pLockCursorFn = vmt::GetVirtual(sdk::g_pSurface, 67);
+    void *pIsAccountPrimeFn = Memory::Pointers::pPrimeFn;
 
     // Hook functions right here.
     g_lockCursor.Hook(pLockCursorFn, hkLockCursor, FILE_AND_LINE);
-    g_isAccountPrime.Hook(Memory::Pointers::pPrimeFn, hkIsAccountPrime, FILE_AND_LINE);
+    g_isAccountPrime.Hook(pIsAccountPrimeFn, hkIsAccountPrime, FILE_AND_LINE);
 
     int rv = funchook_install(g_funchookCtx, 0);
     SDK_ASSERT(rv == FUNCHOOK_ERROR_SUCCESS, "funchook_install() failed!");
@@ -73,13 +74,15 @@ void Hooks::Shutdown()
         ::SDK_UnhookInputAPI();
         ::SDK_UnhookGraphicsAPI();
 
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
         rv = funchook_uninstall(g_funchookCtx, 0);
         if (rv != FUNCHOOK_ERROR_SUCCESS)
         {
             SDK_ERROR("Could not uninstall hooks.");
         }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
         rv = funchook_destroy(g_funchookCtx);
         if (rv != FUNCHOOK_ERROR_SUCCESS)
