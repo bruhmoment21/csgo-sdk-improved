@@ -1,8 +1,8 @@
 #include <Windows.h>
 
-#include "../../../chook.hpp"
+#include "../../chook.hpp"
 
-#include "../../../../logger/logger.hpp"
+#include "../../../logger/logger.hpp"
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_win32.h>

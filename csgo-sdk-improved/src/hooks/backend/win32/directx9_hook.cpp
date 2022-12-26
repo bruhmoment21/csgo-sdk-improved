@@ -1,11 +1,11 @@
 #include <Windows.h>
 #include <d3d9.h>
 
-#include "../../../chook.hpp"
+#include "../../chook.hpp"
 
-#include "../../../../logger/logger.hpp"
-#include "../../../../sdk/vmt/vmt.hpp"
-#include "../../../../menu/menu.hpp"
+#include "../../../logger/logger.hpp"
+#include "../../../sdk/vmt/vmt.hpp"
+#include "../../../menu/menu.hpp"
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_dx9.h>

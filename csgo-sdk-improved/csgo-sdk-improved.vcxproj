@@ -152,8 +152,8 @@
     <ClCompile Include="dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\entry\entry.cpp" />
     <ClCompile Include="src\entry\init.cpp" />
-    <ClCompile Include="src\hooks\backend\platform\win32\directx9_hook.cpp" />
-    <ClCompile Include="src\hooks\backend\platform\win32\wndproc_hook.cpp" />
+    <ClCompile Include="src\hooks\backend\win32\directx9_hook.cpp" />
+    <ClCompile Include="src\hooks\backend\win32\wndproc_hook.cpp" />
     <ClCompile Include="src\hooks\hooks.cpp" />
     <ClCompile Include="src\logger\logger.cpp" />
     <ClCompile Include="src\memory\memory.cpp" />
@@ -294,6 +294,7 @@
     <ClInclude Include="src\logger\logger.hpp" />
     <ClInclude Include="src\memory\memory.hpp" />
     <ClInclude Include="src\memory\module\module.hpp" />
+    <ClInclude Include="src\memory\module\sdk_pointer.hpp" />
     <ClInclude Include="src\menu\menu.hpp" />
     <ClInclude Include="src\sdk\classes\tier1\interface.hpp" />
     <ClInclude Include="src\sdk\interfaces\iinputsystem.hpp" />

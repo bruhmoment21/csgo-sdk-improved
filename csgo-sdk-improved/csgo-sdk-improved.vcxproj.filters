@@ -28,8 +28,8 @@
     <ClCompile Include="dependencies\imgui\imgui_tables.cpp" />
     <ClCompile Include="dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\menu\menu.cpp" />
-    <ClCompile Include="src\hooks\backend\platform\win32\directx9_hook.cpp" />
-    <ClCompile Include="src\hooks\backend\platform\win32\wndproc_hook.cpp" />
+    <ClCompile Include="src\hooks\backend\win32\directx9_hook.cpp" />
+    <ClCompile Include="src\hooks\backend\win32\wndproc_hook.cpp" />
     <ClCompile Include="src\sdk\sdk.cpp" />
     <ClCompile Include="src\utils\utils.cpp" />
   </ItemGroup>
@@ -171,5 +171,6 @@
     <ClInclude Include="src\sdk\interfaces\isurface.hpp" />
     <ClInclude Include="src\config\config.hpp" />
     <ClInclude Include="src\utils\utils.hpp" />
+    <ClInclude Include="src\memory\module\sdk_pointer.hpp" />
   </ItemGroup>
 </Project>
