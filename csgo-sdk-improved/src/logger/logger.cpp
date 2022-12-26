@@ -10,7 +10,10 @@ void Logger::Initialize()
     const std::filesystem::path tempDirPath = std::filesystem::temp_directory_path();
 
     std::string tempDirString = tempDirPath.string();
-    tempDirString.append(WIN32_LINUX("", "/") SDK_NAME ".txt");
+    if (tempDirString.back() != SEPARATOR_CHAR)
+        tempDirString.push_back(SEPARATOR_CHAR);
+
+    tempDirString.append(SDK_NAME ".txt");
 
     auto fileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(tempDirString, true);
     fileSink->set_level(spdlog::level::trace);
