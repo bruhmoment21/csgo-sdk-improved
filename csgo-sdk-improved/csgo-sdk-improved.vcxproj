@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{ccc6cfec-90cb-43a5-bd25-83728dea616b}</ProjectGuid>
+    <RootNamespace>csgosdkimproved</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\bin\</OutDir>
+    <IntDir>..\obj\$(Configuration) $(Platform)\</IntDir>
+    <TargetName>$(ProjectName) $(Configuration)</TargetName>
+    <IncludePath>$(ProjectDir)dependencies;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\bin\</OutDir>
+    <IntDir>..\obj\$(Configuration) $(Platform)\</IntDir>
+    <TargetName>$(ProjectName) $(Configuration)</TargetName>
+    <IncludePath>$(ProjectDir)dependencies;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>DISASM_DISTORM;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d9.lib;psapi.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>DISASM_DISTORM;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <StringPooling>true</StringPooling>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d9.lib;psapi.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="dependencies\funchook\src\decoder.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="dependencies\funchook\src\disasm_distorm.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="dependencies\funchook\src\distorm.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="dependencies\funchook\src\funchook.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="dependencies\funchook\src\funchook_windows.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="dependencies\funchook\src\funchook_x86.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="dependencies\funchook\src\instructions.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="dependencies\funchook\src\insts.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="dependencies\funchook\src\mnemonics.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="dependencies\funchook\src\operands.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="dependencies\funchook\src\prefix.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="dependencies\funchook\src\textdefs.c">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TurnOffAllWarnings</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="dependencies\imgui\imgui.cpp" />
+    <ClCompile Include="dependencies\imgui\imgui_demo.cpp" />
+    <ClCompile Include="dependencies\imgui\imgui_draw.cpp" />
+    <ClCompile Include="dependencies\imgui\imgui_impl_dx9.cpp" />
+    <ClCompile Include="dependencies\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="dependencies\imgui\imgui_tables.cpp" />
+    <ClCompile Include="dependencies\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\entry\entry.cpp" />
+    <ClCompile Include="src\entry\init.cpp" />
+    <ClCompile Include="src\hooks\backend\platform\win32\directx9_hook.cpp" />
+    <ClCompile Include="src\hooks\backend\platform\win32\wndproc_hook.cpp" />
+    <ClCompile Include="src\hooks\hooks.cpp" />
+    <ClCompile Include="src\logger\logger.cpp" />
+    <ClCompile Include="src\memory\memory.cpp" />
+    <ClCompile Include="src\memory\module\module.cpp" />
+    <ClCompile Include="src\menu\menu.cpp" />
+    <ClCompile Include="src\sdk\sdk.cpp" />
+    <ClCompile Include="src\sdk\vmt\vmt.cpp" />
+    <ClCompile Include="src\utils\utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dependencies\funchook\include\distorm.h" />
+    <ClInclude Include="dependencies\funchook\include\mnemonics.h" />
+    <ClInclude Include="dependencies\funchook\src\config.h" />
+    <ClInclude Include="dependencies\funchook\src\decoder.h" />
+    <ClInclude Include="dependencies\funchook\src\disasm.h" />
+    <ClInclude Include="dependencies\funchook\src\funchook.h" />
+    <ClInclude Include="dependencies\funchook\src\funchook_internal.h" />
+    <ClInclude Include="dependencies\funchook\src\funchook_x86.h" />
+    <ClInclude Include="dependencies\funchook\src\instructions.h" />
+    <ClInclude Include="dependencies\funchook\src\insts.h" />
+    <ClInclude Include="dependencies\funchook\src\operands.h" />
+    <ClInclude Include="dependencies\funchook\src\prefix.h" />
+    <ClInclude Include="dependencies\funchook\src\textdefs.h" />
+    <ClInclude Include="dependencies\funchook\src\wstring.h" />
+    <ClInclude Include="dependencies\funchook\src\x86defs.h" />
+    <ClInclude Include="dependencies\imgui\imconfig.h" />
+    <ClInclude Include="dependencies\imgui\imgui.h" />
+    <ClInclude Include="dependencies\imgui\imgui_impl_dx9.h" />
+    <ClInclude Include="dependencies\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="dependencies\imgui\imgui_internal.h" />
+    <ClInclude Include="dependencies\imgui\imstb_rectpack.h" />
+    <ClInclude Include="dependencies\imgui\imstb_textedit.h" />
+    <ClInclude Include="dependencies\imgui\imstb_truetype.h" />
+    <ClInclude Include="dependencies\spdlog\async.h" />
+    <ClInclude Include="dependencies\spdlog\async_logger-inl.h" />
+    <ClInclude Include="dependencies\spdlog\async_logger.h" />
+    <ClInclude Include="dependencies\spdlog\cfg\argv.h" />
+    <ClInclude Include="dependencies\spdlog\cfg\env.h" />
+    <ClInclude Include="dependencies\spdlog\cfg\helpers-inl.h" />
+    <ClInclude Include="dependencies\spdlog\cfg\helpers.h" />
+    <ClInclude Include="dependencies\spdlog\common-inl.h" />
+    <ClInclude Include="dependencies\spdlog\common.h" />
+    <ClInclude Include="dependencies\spdlog\details\backtracer-inl.h" />
+    <ClInclude Include="dependencies\spdlog\details\backtracer.h" />
+    <ClInclude Include="dependencies\spdlog\details\circular_q.h" />
+    <ClInclude Include="dependencies\spdlog\details\console_globals.h" />
+    <ClInclude Include="dependencies\spdlog\details\file_helper-inl.h" />
+    <ClInclude Include="dependencies\spdlog\details\file_helper.h" />
+    <ClInclude Include="dependencies\spdlog\details\fmt_helper.h" />
+    <ClInclude Include="dependencies\spdlog\details\log_msg-inl.h" />
+    <ClInclude Include="dependencies\spdlog\details\log_msg.h" />
+    <ClInclude Include="dependencies\spdlog\details\log_msg_buffer-inl.h" />
+    <ClInclude Include="dependencies\spdlog\details\log_msg_buffer.h" />
+    <ClInclude Include="dependencies\spdlog\details\mpmc_blocking_q.h" />
+    <ClInclude Include="dependencies\spdlog\details\null_mutex.h" />
+    <ClInclude Include="dependencies\spdlog\details\os-inl.h" />
+    <ClInclude Include="dependencies\spdlog\details\os.h" />
+    <ClInclude Include="dependencies\spdlog\details\periodic_worker-inl.h" />
+    <ClInclude Include="dependencies\spdlog\details\periodic_worker.h" />
+    <ClInclude Include="dependencies\spdlog\details\registry-inl.h" />
+    <ClInclude Include="dependencies\spdlog\details\registry.h" />
+    <ClInclude Include="dependencies\spdlog\details\synchronous_factory.h" />
+    <ClInclude Include="dependencies\spdlog\details\tcp_client-windows.h" />
+    <ClInclude Include="dependencies\spdlog\details\tcp_client.h" />
+    <ClInclude Include="dependencies\spdlog\details\thread_pool-inl.h" />
+    <ClInclude Include="dependencies\spdlog\details\thread_pool.h" />
+    <ClInclude Include="dependencies\spdlog\details\udp_client-windows.h" />
+    <ClInclude Include="dependencies\spdlog\details\udp_client.h" />
+    <ClInclude Include="dependencies\spdlog\details\windows_include.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bin_to_hex.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bundled\args.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bundled\chrono.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bundled\color.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bundled\compile.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bundled\core.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bundled\format-inl.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bundled\format.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bundled\locale.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bundled\os.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bundled\ostream.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bundled\printf.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bundled\ranges.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\bundled\xchar.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\chrono.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\compile.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\fmt.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\ostr.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\ranges.h" />
+    <ClInclude Include="dependencies\spdlog\fmt\xchar.h" />
+    <ClInclude Include="dependencies\spdlog\formatter.h" />
+    <ClInclude Include="dependencies\spdlog\fwd.h" />
+    <ClInclude Include="dependencies\spdlog\logger-inl.h" />
+    <ClInclude Include="dependencies\spdlog\logger.h" />
+    <ClInclude Include="dependencies\spdlog\pattern_formatter-inl.h" />
+    <ClInclude Include="dependencies\spdlog\pattern_formatter.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\android_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\ansicolor_sink-inl.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\ansicolor_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\base_sink-inl.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\base_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\basic_file_sink-inl.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\basic_file_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\daily_file_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\dist_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\dup_filter_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\hourly_file_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\mongo_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\msvc_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\null_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\ostream_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\qt_sinks.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\ringbuffer_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\rotating_file_sink-inl.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\rotating_file_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\sink-inl.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\stdout_color_sinks-inl.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\stdout_color_sinks.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\stdout_sinks-inl.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\stdout_sinks.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\syslog_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\systemd_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\tcp_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\udp_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\wincolor_sink-inl.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\wincolor_sink.h" />
+    <ClInclude Include="dependencies\spdlog\sinks\win_eventlog_sink.h" />
+    <ClInclude Include="dependencies\spdlog\spdlog-inl.h" />
+    <ClInclude Include="dependencies\spdlog\spdlog.h" />
+    <ClInclude Include="dependencies\spdlog\stopwatch.h" />
+    <ClInclude Include="dependencies\spdlog\tweakme.h" />
+    <ClInclude Include="dependencies\spdlog\version.h" />
+    <ClInclude Include="dependencies\stb\stb.hh" />
+    <ClInclude Include="src\config\config.hpp" />
+    <ClInclude Include="src\defs.hpp" />
+    <ClInclude Include="src\hooks\chook.hpp" />
+    <ClInclude Include="src\hooks\hooks.hpp" />
+    <ClInclude Include="src\logger\logger.hpp" />
+    <ClInclude Include="src\memory\memory.hpp" />
+    <ClInclude Include="src\memory\module\module.hpp" />
+    <ClInclude Include="src\menu\menu.hpp" />
+    <ClInclude Include="src\sdk\classes\tier1\interface.hpp" />
+    <ClInclude Include="src\sdk\interfaces\iinputsystem.hpp" />
+    <ClInclude Include="src\sdk\interfaces\isurface.hpp" />
+    <ClInclude Include="src\sdk\sdk.hpp" />
+    <ClInclude Include="src\sdk\vmt\vmt.hpp" />
+    <ClInclude Include="src\utils\utils.hpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
