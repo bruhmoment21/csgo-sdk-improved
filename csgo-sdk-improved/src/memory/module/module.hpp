@@ -1,8 +1,10 @@
 #pragma once
 
+#include <stddef.h>
 #include <array>
 
-struct SDK_Pointer;
+#include "sdk_pointer.hpp"
+
 class InterfaceReg;
 
 class CModule
@@ -33,6 +35,19 @@ class CModule
         return reinterpret_cast<T>(FindInterfaceEx(szInterfaceName, szFileName, line));
     }
 
+    // These are needed for linux.
+    inline auto GetName() const
+    {
+        return this->m_moduleName ? this->m_moduleName : "";
+    }
+
+    // Needed for linux (dl_iterate_phdr).
+    inline auto SetModuleBounds(uintptr_t start, uintptr_t end)
+    {
+        this->m_start = start;
+        this->m_end = end;
+    }
+
   private:
     void ReleaseHandle();
 
@@ -44,54 +59,4 @@ class CModule
     const char *m_moduleName;
     void *m_handle;
     uintptr_t m_start, m_end;
-};
-
-struct SDK_Pointer
-{
-    template <typename T> explicit SDK_Pointer(T ptr)
-    {
-        this->m_ptr = (uintptr_t)(ptr);
-    }
-
-    template <typename T = void *> inline T GetAs(const char *szFileName, int line)
-    {
-        return reinterpret_cast<T>(this->Get(szFileName, line));
-    }
-
-    inline SDK_Pointer &AddOffset(int offset)
-    {
-        if (!this->m_ptr)
-            return *this;
-
-        this->m_ptr += offset;
-        return *this;
-    }
-
-    inline SDK_Pointer &Deref(int n)
-    {
-        if (!this->m_ptr)
-            return *this;
-
-        while (n-- != 0)
-            this->m_ptr = *reinterpret_cast<decltype(this->m_ptr) *>(this->m_ptr);
-
-        return *this;
-    }
-
-    inline SDK_Pointer &ToAbs(int preOffset, int postOffset)
-    {
-        if (!this->m_ptr)
-            return *this;
-
-        this->AddOffset(preOffset);
-        this->m_ptr = this->m_ptr + 4 + *reinterpret_cast<int *>(this->m_ptr);
-        this->AddOffset(postOffset);
-
-        return *this;
-    }
-
-  private:
-    uintptr_t Get(const char *szFileName, int line);
-
-    uintptr_t m_ptr;
 };

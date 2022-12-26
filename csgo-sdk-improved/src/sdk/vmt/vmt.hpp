@@ -22,22 +22,26 @@ namespace vmt
         if constexpr (Convention == CDECL_CONV)
         {
             using FnType = T(CDECL_CALL *)(void *, Args...);
-            return static_cast<FnType>(GetVirtual(pClass, index VERBOSE_PARM(, szFilePath, line)))(pClass, args...);
+            return reinterpret_cast<FnType>(GetVirtual(pClass, index VERBOSE_PARM(, szFilePath, line)))(pClass,
+                                                                                                        args...);
         }
         else if constexpr (Convention == STDCALL_CONV)
         {
             using FnType = T(STDCALL_CALL *)(void *, Args...);
-            return static_cast<FnType>(GetVirtual(pClass, index VERBOSE_PARM(, szFilePath, line)))(pClass, args...);
+            return reinterpret_cast<FnType>(GetVirtual(pClass, index VERBOSE_PARM(, szFilePath, line)))(pClass,
+                                                                                                        args...);
         }
         else if constexpr (Convention == FASTCALL_CONV)
         {
             using FnType = T(FASTCALL_CALL *)(void *, Args...);
-            return static_cast<FnType>(GetVirtual(pClass, index VERBOSE_PARM(, szFilePath, line)))(pClass, args...);
+            return reinterpret_cast<FnType>(GetVirtual(pClass, index VERBOSE_PARM(, szFilePath, line)))(pClass,
+                                                                                                        args...);
         }
         else if constexpr (Convention == THISCALL_CONV)
         {
             using FnType = T(THISCALL_CALL *)(void *, Args...);
-            return static_cast<FnType>(GetVirtual(pClass, index VERBOSE_PARM(, szFilePath, line)))(pClass, args...);
+            return reinterpret_cast<FnType>(GetVirtual(pClass, index VERBOSE_PARM(, szFilePath, line)))(pClass,
+                                                                                                        args...);
         }
     }
 } // namespace vmt

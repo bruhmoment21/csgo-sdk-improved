@@ -27,9 +27,15 @@ void Memory::InitializePointers()
     if (!ctx)
         return;
 
+#ifdef __linux__
+    pPrimeFn = ctx->g_client.FindPattern(SIG_TO_ARRAY("E8 ? ? ? ? 89 C3 8B 85 ? ? ? ?"))
+                   .ToAbs(1, 0)
+                   .GetAs<decltype(pPrimeFn)>(FILE_AND_LINE);
+#else
     pPrimeFn = ctx->g_client.FindPattern(SIG_TO_ARRAY("E8 ? ? ? ? 88 46 14"))
                    .ToAbs(1, 0)
                    .GetAs<decltype(pPrimeFn)>(FILE_AND_LINE);
+#endif
 
     SDK_INFO("Initialized pointers!");
 }

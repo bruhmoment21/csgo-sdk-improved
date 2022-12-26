@@ -8,7 +8,7 @@
 #include "../sdk/sdk.hpp"
 
 // These functions have different bodies on Linux!!!
-// Check 'platform/win32' and 'platform/linux'.
+// Check 'backend/win32' and 'backend/linux'.
 void SDK_HookInputAPI();
 void SDK_UnhookInputAPI();
 void SDK_HookGraphicsAPI();

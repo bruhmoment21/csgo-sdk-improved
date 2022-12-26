@@ -1,5 +1,10 @@
+#ifdef __linux__
+#include <dlfcn.h>
+#include <link.h>
+#else
 #include <Windows.h>
 #include <Psapi.h>
+#endif
 
 #include "module.hpp"
 
@@ -68,7 +73,12 @@ bool CModule::Parse()
         return true;
     }
 
+#ifdef __linux__
+    this->m_handle = dlopen(this->m_moduleName, RTLD_LAZY | RTLD_NOLOAD);
+#else
     this->m_handle = static_cast<void *>(GetModuleHandle(this->m_moduleName));
+#endif
+
     SDK_ASSERT(this->m_handle != NULL, "Module handle not found!");
     if (this->m_handle == NULL)
     {
@@ -76,6 +86,24 @@ bool CModule::Parse()
         return false;
     }
 
+#ifdef __linux__
+    dl_iterate_phdr(
+        [](struct dl_phdr_info *info, size_t, void *data) {
+            CModule *pCurrentModule = static_cast<CModule *>(data);
+            if (strstr(info->dlpi_name, pCurrentModule->GetName()) != 0)
+            {
+                uintptr_t start = static_cast<uintptr_t>(info->dlpi_addr + info->dlpi_phdr[0].p_vaddr);
+                uintptr_t end = static_cast<uintptr_t>(info->dlpi_phdr[0].p_memsz);
+
+                pCurrentModule->SetModuleBounds(start, end);
+
+                return 1;
+            }
+
+            return 0;
+        },
+        static_cast<void *>(this));
+#else
     MODULEINFO mi;
     BOOL status = GetModuleInformation(GetCurrentProcess(), static_cast<HMODULE>(this->m_handle), &mi, sizeof(mi));
     SDK_ASSERT(status != 0, "GetModuleInformation() failed!");
@@ -87,6 +115,7 @@ bool CModule::Parse()
 
     this->m_start = reinterpret_cast<uintptr_t>(this->m_handle);
     this->m_end = static_cast<uintptr_t>(mi.SizeOfImage);
+#endif
 
     SDK_INFO("Parsed '{}': m_handle: {}, m_start: {:x}, m_end: {:x}.", this->m_moduleName, fmt::ptr(this->m_handle),
              this->m_start, this->m_end);
@@ -103,13 +132,21 @@ void *CModule::GetProcAddress(const char *lpProcName)
 {
     void *rv = nullptr;
 
+#ifdef __linux__
+    rv = ::dlsym(this->m_handle, lpProcName);
+#else
     rv = static_cast<void *>(::GetProcAddress(static_cast<HMODULE>(this->m_handle), lpProcName));
+#endif
 
     return rv;
 }
 
 void CModule::ReleaseHandle()
 {
+#ifdef __linux__
+    dlclose(this->m_handle);
+#endif
+
     SDK_INFO("Released '{}' handle!", fmt::ptr(this->m_handle));
 }
 
@@ -146,8 +183,7 @@ uintptr_t CModule::FindInterfaceEx(const char *szInterfaceName, const char *szFi
 {
     uintptr_t rv = 0;
 
-    for (InterfaceReg *pRegList = this->GetRegisterLinkedList(szFileName, line); pRegList;
-         pRegList = pRegList->m_pNext)
+    for (InterfaceReg *pRegList = this->GetRegisterLinkedList(szFileName, line); pRegList; pRegList = pRegList->m_pNext)
     {
         if (strcmp(szInterfaceName, pRegList->m_pName) == 0)
         {
@@ -170,6 +206,13 @@ uintptr_t CModule::FindInterfaceEx(const char *szInterfaceName, const char *szFi
 
 InterfaceReg *CModule::GetRegisterLinkedList(const char *szFileName, int line)
 {
+#ifdef __linux__
+    void *s_pInterfaceRegs = this->GetProcAddress("s_pInterfaceRegs");
+    if (!s_pInterfaceRegs)
+        return nullptr;
+
+    return *reinterpret_cast<InterfaceReg **>(s_pInterfaceRegs);
+#else
     void *pCreateInterface = this->GetProcAddress("CreateInterface");
     if (!pCreateInterface)
         return nullptr;
@@ -178,6 +221,7 @@ InterfaceReg *CModule::GetRegisterLinkedList(const char *szFileName, int line)
     rv.ToAbs(5, 6).Deref(2);
 
     return rv.GetAs<InterfaceReg *>(szFileName, line);
+#endif
 }
 
 uintptr_t SDK_Pointer::Get(const char *szFileName, int line)

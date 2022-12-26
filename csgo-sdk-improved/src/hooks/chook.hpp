@@ -24,10 +24,10 @@ template <typename T> class CHook
             return;
         }
 
-        this->m_pOriginalFn = static_cast<decltype(this->m_pOriginalFn)>(pOriginalFn);
+        this->m_pOriginalFn = reinterpret_cast<decltype(this->m_pOriginalFn)>(pOriginalFn);
 
         int rv = funchook_prepare(g_funchookCtx, reinterpret_cast<void **>(&this->m_pOriginalFn),
-                                  static_cast<void *>(pHookFn));
+                                  reinterpret_cast<void *>(pHookFn));
 
         SDK_ASSERT(rv == FUNCHOOK_ERROR_SUCCESS, "funchook_prepare() failed!");
         if (rv == FUNCHOOK_ERROR_SUCCESS)
