@@ -52,7 +52,7 @@ void Menu::Render()
     ImGui::GetIO().MouseDrawCursor = g_showMenu;
 #endif
 
-    sdk::g_pInputSystem->EnableInput(!g_showMenu);
+    Interfaces::g_pInputSystem->EnableInput(!g_showMenu);
 
     // This fixes a glitch where sometimes your cursor will appear when moving mouse fast.
     ImGuiIO &io = ImGui::GetIO();
@@ -94,7 +94,7 @@ void Menu::OnStateChange()
 
 void Menu::Shutdown()
 {
-    sdk::g_pInputSystem->EnableInput(true);
+    Interfaces::g_pInputSystem->EnableInput(true);
 
     SDK_INFO("Shutdown menu!");
 }

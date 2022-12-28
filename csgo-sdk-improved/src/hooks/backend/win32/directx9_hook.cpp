@@ -14,6 +14,9 @@
 static LPDIRECT3D9 g_pD3D = NULL;
 static LPDIRECT3DDEVICE9 g_pd3dDevice = NULL;
 
+// Declared in 'render.cpp'.
+void SDK_OnRender();
+
 static bool CreateDeviceD3D9(HWND hWnd);
 static void CleanupDeviceD3D9();
 static void RenderImGui_DX9(IDirect3DDevice9 *pDevice);
@@ -133,7 +136,7 @@ static void RenderImGui_DX9(IDirect3DDevice9 *pDevice)
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
 
-    Menu::Render();
+    ::SDK_OnRender();
 
     ImGui::EndFrame();
     if (pDevice->BeginScene() == D3D_OK)

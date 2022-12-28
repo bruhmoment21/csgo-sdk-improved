@@ -153,6 +153,7 @@
     <ClCompile Include="dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\entry\entry.cpp" />
     <ClCompile Include="src\entry\init.cpp" />
+    <ClCompile Include="src\hooks\backend\render.cpp" />
     <ClCompile Include="src\hooks\backend\win32\directx9_hook.cpp" />
     <ClCompile Include="src\hooks\backend\win32\wndproc_hook.cpp" />
     <ClCompile Include="src\hooks\hooks.cpp" />

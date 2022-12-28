@@ -3,10 +3,10 @@
 #include "interfaces/iinputsystem.hpp"
 #include "interfaces/isurface.hpp"
 
-namespace sdk
+namespace Interfaces
 {
-    void FindInterfaces();
+    void Initialize();
 
     inline IInputSystem *g_pInputSystem;
     inline ISurface *g_pSurface;
-} // namespace sdk
+} // namespace Interfaces

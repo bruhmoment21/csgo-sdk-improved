@@ -19,7 +19,7 @@ static void FASTCALL_CALL hkLockCursor(HOOK_ARGS)
 {
     if (Menu::g_showMenu)
     {
-        return sdk::g_pSurface->UnlockCursor();
+        return Interfaces::g_pSurface->UnlockCursor();
     }
 
     return g_lockCursor.m_pOriginalFn(HOOK_CALL);
@@ -47,7 +47,7 @@ void Hooks::Initialize()
     ::SDK_HookInputAPI();
     ::SDK_HookGraphicsAPI();
 
-    void *pLockCursorFn = vmt::GetVirtual(sdk::g_pSurface, 67, FILE_AND_LINE);
+    void *pLockCursorFn = vmt::GetVirtual(Interfaces::g_pSurface, 67, FILE_AND_LINE);
     void *pIsAccountPrimeFn = Memory::Pointers::pPrimeFn;
 
     // Hook functions right here.

@@ -4,7 +4,7 @@
 
 #define FIND_INTERFACE(src, mod, iface) src = mod.FindInterface<decltype(src)>(iface, FILE_AND_LINE)
 
-void sdk::FindInterfaces()
+void Interfaces::Initialize()
 {
     CModulesContext *ctx = Memory::GetModulesContext();
     if (!ctx)

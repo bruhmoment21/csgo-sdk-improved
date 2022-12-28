@@ -23,9 +23,7 @@ void InitializeSDK()
 
     Memory::InitializeModuleContext();
     Memory::InitializePointers();
-
-    sdk::FindInterfaces();
-
+    Interfaces::Initialize();
     Hooks::Initialize();
 
     Memory::FreeModuleContext();

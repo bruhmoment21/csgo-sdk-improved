@@ -33,6 +33,7 @@
     <ClCompile Include="src\sdk\sdk.cpp" />
     <ClCompile Include="src\utils\utils.cpp" />
     <ClCompile Include="dependencies\imgui\imgui_freetype.cpp" />
+    <ClCompile Include="src\hooks\backend\render.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\logger\logger.hpp" />
