@@ -14,7 +14,7 @@
 static LPDIRECT3D9 g_pD3D = NULL;
 static LPDIRECT3DDEVICE9 g_pd3dDevice = NULL;
 
-// Declared in 'render.cpp'.
+// Defined in 'render.cpp'.
 void SDK_OnRender();
 
 static bool CreateDeviceD3D9(HWND hWnd);

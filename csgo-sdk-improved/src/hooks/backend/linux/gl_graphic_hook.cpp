@@ -9,6 +9,9 @@
 #include <imgui/imgui_impl_opengl3.h>
 #include <imgui/imgui_impl_sdl.h>
 
+// Defined in 'render.cpp'.
+void SDK_OnRender();
+
 static CHook<void(SDL_Window *)> g_GLSwapWindow;
 static void hkGLSwapWindow(SDL_Window *window)
 {
@@ -45,7 +48,7 @@ static void hkGLSwapWindow(SDL_Window *window)
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 
-    Menu::Render();
+    ::SDK_OnRender();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

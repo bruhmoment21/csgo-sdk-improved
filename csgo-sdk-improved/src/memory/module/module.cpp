@@ -79,7 +79,6 @@ bool CModule::Parse()
     this->m_handle = static_cast<void *>(GetModuleHandle(this->m_moduleName));
 #endif
 
-    SDK_ASSERT(this->m_handle != NULL, "Module handle not found!");
     if (this->m_handle == NULL)
     {
         SDK_CRITICAL("Module '{}' handle couldn't be retrieved.", this->m_moduleName);

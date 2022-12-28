@@ -21,6 +21,9 @@ static VkRenderPass g_RenderPass = VK_NULL_HANDLE;
 static ImGui_ImplVulkanH_Frame g_Frames[8] = {};
 static VkExtent2D g_ImageExtent = {};
 
+// Defined in 'render.cpp'.
+void SDK_OnRender();
+
 static bool CreateDeviceVK();
 static void CleanupDeviceVulkan();
 static void CleanupRenderTarget();
@@ -500,7 +503,7 @@ static void RenderImGui_Vulkan(VkQueue queue, const VkPresentInfoKHR *pPresentIn
         ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
 
-        Menu::Render();
+        ::SDK_OnRender();
 
         ImGui::Render();
 
