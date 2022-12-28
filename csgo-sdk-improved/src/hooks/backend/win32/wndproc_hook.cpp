@@ -14,7 +14,9 @@ static LRESULT hkWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     if (!ImGui::GetCurrentContext())
     {
         ImGui::CreateContext();
+
         ImGui_ImplWin32_Init(hWnd);
+        SDK_TRACE("Called ImGui_ImplWin32_Init({}).", fmt::ptr(hWnd));
 
         ImGuiIO &io = ImGui::GetIO();
         io.IniFilename = io.LogFilename = nullptr;

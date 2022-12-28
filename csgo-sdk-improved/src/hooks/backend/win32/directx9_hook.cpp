@@ -47,8 +47,8 @@ void SDK_HookGraphicsAPI()
     SDK_INFO("'{}:{}': g_pD3D: {}", FILE_AND_LINE, fmt::ptr(g_pD3D));
     SDK_INFO("'{}:{}': g_pd3dDevice: {}", FILE_AND_LINE, fmt::ptr(g_pd3dDevice));
 
-    void *pResentFn = vmt::GetVirtual(g_pd3dDevice, 16);
-    void *pPresentFn = vmt::GetVirtual(g_pd3dDevice, 17);
+    void *pResentFn = vmt::GetVirtual(g_pd3dDevice, 16, FILE_AND_LINE);
+    void *pPresentFn = vmt::GetVirtual(g_pd3dDevice, 17, FILE_AND_LINE);
 
     CleanupDeviceD3D9();
 
@@ -113,39 +113,35 @@ static void CleanupDeviceD3D9()
 
 static void RenderImGui_DX9(IDirect3DDevice9 *pDevice)
 {
-    if (!ImGui::GetCurrentContext())
+    if (!ImGui::GetCurrentContext() || ::g_isShuttingDown)
         return;
 
     if (!ImGui::GetIO().BackendRendererUserData)
     {
         ImGui_ImplDX9_Init(pDevice);
-
         Menu::Initialize();
 
         // If this is called 2 times it should be a problem.
         SDK_TRACE("Called ImGui_ImplDX9_Init().");
     }
 
-    if (ImGui::GetCurrentContext())
+    DWORD SRGBWriteEnable;
+    pDevice->GetRenderState(D3DRS_SRGBWRITEENABLE, &SRGBWriteEnable);
+    pDevice->SetRenderState(D3DRS_SRGBWRITEENABLE, false);
+
+    ImGui_ImplDX9_NewFrame();
+    ImGui_ImplWin32_NewFrame();
+    ImGui::NewFrame();
+
+    Menu::Render();
+
+    ImGui::EndFrame();
+    if (pDevice->BeginScene() == D3D_OK)
     {
-        DWORD SRGBWriteEnable;
-        pDevice->GetRenderState(D3DRS_SRGBWRITEENABLE, &SRGBWriteEnable);
-        pDevice->SetRenderState(D3DRS_SRGBWRITEENABLE, false);
-
-        ImGui_ImplDX9_NewFrame();
-        ImGui_ImplWin32_NewFrame();
-        ImGui::NewFrame();
-
-        Menu::Render();
-
-        ImGui::EndFrame();
-        if (pDevice->BeginScene() == D3D_OK)
-        {
-            ImGui::Render();
-            ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
-            pDevice->EndScene();
-        }
-
-        pDevice->SetRenderState(D3DRS_SRGBWRITEENABLE, SRGBWriteEnable);
+        ImGui::Render();
+        ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+        pDevice->EndScene();
     }
+
+    pDevice->SetRenderState(D3DRS_SRGBWRITEENABLE, SRGBWriteEnable);
 }

@@ -33,6 +33,7 @@ static void hkGLSwapWindow(SDL_Window *window)
         ImGui_ImplOpenGL3_Init();
         Menu::Initialize();
 
+        // If this is called 2 times it should be a problem.
         SDK_TRACE("Called ImGui_ImplOpenGL3_Init().");
     }
 
