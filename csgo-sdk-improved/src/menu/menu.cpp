@@ -24,19 +24,7 @@ void Menu::Render()
     if (ImGui::IsKeyPressed(ImGuiKey_Insert, false))
     {
         g_showMenu = !g_showMenu;
-
-#ifdef __linux__
-        static SDL_bool bMouseLastState;
-        if (g_showMenu)
-        {
-            bMouseLastState = SDL_GetRelativeMouseMode();
-            SDL_SetRelativeMouseMode(SDL_FALSE);
-        }
-        else
-        {
-            SDL_SetRelativeMouseMode(bMouseLastState);
-        }
-#endif
+        Menu::OnStateChange();
     }
 
 #ifdef __linux__
@@ -65,6 +53,22 @@ void Menu::Render()
         }
     }
     ImGui::End();
+}
+
+void Menu::OnStateChange()
+{
+#ifdef __linux__
+    static SDL_bool bMouseLastState;
+    if (g_showMenu)
+    {
+        bMouseLastState = SDL_GetRelativeMouseMode();
+        SDL_SetRelativeMouseMode(SDL_FALSE);
+    }
+    else
+    {
+        SDL_SetRelativeMouseMode(bMouseLastState);
+    }
+#endif
 }
 
 void Menu::Shutdown()

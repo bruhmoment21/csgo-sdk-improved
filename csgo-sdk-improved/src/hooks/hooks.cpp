@@ -69,6 +69,9 @@ void Hooks::Shutdown()
 {
     int rv = FUNCHOOK_ERROR_SUCCESS;
 
+    ::g_isShuttingDown = true;
+    SDK_INFO("g_isShuttingDown set to 'true'.");
+
     if (g_funchookCtx)
     {
         ::SDK_UnhookInputAPI();

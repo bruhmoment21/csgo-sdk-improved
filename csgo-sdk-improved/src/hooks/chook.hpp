@@ -8,6 +8,7 @@
 
 // Hook context
 inline funchook_t *g_funchookCtx = nullptr;
+inline bool g_isShuttingDown = false;
 
 template <typename T> class CHook
 {

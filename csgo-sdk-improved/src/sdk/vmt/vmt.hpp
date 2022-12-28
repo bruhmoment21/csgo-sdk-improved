@@ -14,7 +14,7 @@ namespace vmt
         THISCALL_CONV
     };
 
-    void *GetVirtual(void *pClass, int index, const char *szFilePath = nullptr, int line = 0);
+    void *GetVirtual(void *pClass, int index, const char *szFilePath, int line);
 
     template <typename T, ECallingConvention Convention, typename... Args>
     inline T CallVirtual(int index, const char *szFilePath, int line, void *pClass, Args... args)

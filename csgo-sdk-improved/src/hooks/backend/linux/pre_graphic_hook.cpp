@@ -1,5 +1,6 @@
 #include "../../../logger/logger.hpp"
 #include "../../../memory/memory.hpp"
+#include "../../../menu/menu.hpp"
 
 void SDK_HookVulkanAPI(CModule *pLibdxvk_d3d9);
 void SDK_UnhookVulkanAPI();
@@ -22,24 +23,28 @@ void SDK_HookGraphicsAPI()
     if (g_isRunningVulkan)
     {
         SDK_INFO("Vulkan has been detected.");
-        SDK_HookVulkanAPI(&libdxvk_d3d9);
+        ::SDK_HookVulkanAPI(&libdxvk_d3d9);
     }
     else
     {
         SDK_INFO("OpenGL has been detected.");
-        SDK_HookOpenGLAPI();
+        ::SDK_HookOpenGLAPI();
     }
 }
 
 // [THIS]: Called in 'hooks.cpp'.
 void SDK_UnhookGraphicsAPI()
 {
+    // Fixes a glitch where sensitivity is too low.
+    Menu::g_showMenu = false;
+    Menu::OnStateChange();
+
     if (g_isRunningVulkan)
     {
-        SDK_UnhookVulkanAPI();
+        ::SDK_UnhookVulkanAPI();
     }
     else
     {
-        SDK_UnhookOpenGLAPI();
+        ::SDK_UnhookOpenGLAPI();
     }
 }

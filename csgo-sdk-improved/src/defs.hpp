@@ -6,7 +6,7 @@
 #define SDK_NAME "csgo-sdk-improved"
 
 // Increases verbosity
-// #define SDK_ENABLE_VERBOSITY
+#define SDK_ENABLE_VERBOSITY
 
 // Platform defines.
 #ifdef __linux__

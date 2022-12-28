@@ -160,6 +160,10 @@ void SDK_UnhookVulkanAPI()
 
 static bool CreateDeviceVK()
 {
+    // Don't create a device 2 times.
+    if (g_FakeDevice)
+        return true;
+
     // Create Vulkan Instance
     {
         VkInstanceCreateInfo create_info = {};
@@ -421,7 +425,7 @@ static void CleanupDeviceVulkan()
 
 static void RenderImGui_Vulkan(VkQueue queue, const VkPresentInfoKHR *pPresentInfo)
 {
-    if (!g_Device)
+    if (!g_Device || ::g_isShuttingDown)
         return;
 
     if (!ImGui::GetCurrentContext())

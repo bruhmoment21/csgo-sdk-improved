@@ -9,8 +9,6 @@
 #include <imgui/imgui_impl_opengl3.h>
 #include <imgui/imgui_impl_sdl.h>
 
-static bool g_shouldShutDownOpenGL = false;
-
 static CHook<void(SDL_Window *)> g_GLSwapWindow;
 static void hkGLSwapWindow(SDL_Window *window)
 {
@@ -21,11 +19,11 @@ static void hkGLSwapWindow(SDL_Window *window)
     }
 
     void *pRendererUserData = ImGui::GetIO().BackendRendererUserData;
-    if (g_shouldShutDownOpenGL && !pRendererUserData)
+    if (::g_isShuttingDown && !pRendererUserData)
     {
         return g_GLSwapWindow.m_pOriginalFn(window);
     }
-    else if (g_shouldShutDownOpenGL && pRendererUserData)
+    else if (::g_isShuttingDown && pRendererUserData)
     {
         ImGui_ImplOpenGL3_Shutdown();
         return g_GLSwapWindow.m_pOriginalFn(window);
@@ -70,9 +68,6 @@ void SDK_UnhookOpenGLAPI()
 
     // 'ImGui_ImplOpenGL3_Shutdown' is being called in our hook because Init and Shutdown
     // must be called from the same thread for some reason.
-
-    g_shouldShutDownOpenGL = true;
-    SDK_TRACE("g_shouldShutDownOpenGL set to 'true'.");
 
     ImGuiIO &io = ImGui::GetIO();
     while (io.BackendRendererUserData)
