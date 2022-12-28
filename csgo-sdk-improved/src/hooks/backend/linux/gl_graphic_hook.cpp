@@ -14,7 +14,11 @@ static void hkGLSwapWindow(SDL_Window *window)
 {
     if (!ImGui::GetCurrentContext())
     {
-        SDK_WARN("SDL_Window has not been found! Try alt tabbing...");
+        if (!::g_isShuttingDown)
+        {
+            SDK_WARN("SDL_Window has not been found! Try alt tabbing...");
+        }
+
         return g_GLSwapWindow.m_pOriginalFn(window);
     }
 

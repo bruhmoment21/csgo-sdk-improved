@@ -43,4 +43,6 @@ target_link_options(${CMAKE_PROJECT_NAME} PRIVATE LINKER:--no-undefined)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} ${Vulkan_LIBRARIES} ${FREETYPE_LIBRARIES})
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     "${CMAKE_SOURCE_DIR}/csgo-sdk-improved/dependencies"
+
+    ${FREETYPE_INCLUDE_DIRS}
 )
