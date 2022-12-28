@@ -35,7 +35,6 @@ class CModule
         return reinterpret_cast<T>(FindInterfaceEx(szInterfaceName, szFileName, line));
     }
 
-    // These are needed for linux.
     inline auto GetName() const
     {
         return this->m_moduleName ? this->m_moduleName : "";

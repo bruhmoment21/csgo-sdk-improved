@@ -47,7 +47,7 @@ void Hooks::Initialize()
     ::SDK_HookInputAPI();
     ::SDK_HookGraphicsAPI();
 
-    void *pLockCursorFn = vmt::GetVirtual(sdk::g_pSurface, 67);
+    void *pLockCursorFn = vmt::GetVirtual(sdk::g_pSurface, 67, FILE_AND_LINE);
     void *pIsAccountPrimeFn = Memory::Pointers::pPrimeFn;
 
     // Hook functions right here.
@@ -74,7 +74,7 @@ void Hooks::Shutdown()
         ::SDK_UnhookInputAPI();
         ::SDK_UnhookGraphicsAPI();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        std::this_thread::sleep_for(std::chrono::milliseconds(75));
 
         rv = funchook_uninstall(g_funchookCtx, 0);
         if (rv != FUNCHOOK_ERROR_SUCCESS)
@@ -82,7 +82,7 @@ void Hooks::Shutdown()
             SDK_ERROR("Could not uninstall hooks.");
         }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        std::this_thread::sleep_for(std::chrono::milliseconds(75));
 
         rv = funchook_destroy(g_funchookCtx);
         if (rv != FUNCHOOK_ERROR_SUCCESS)

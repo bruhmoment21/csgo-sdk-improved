@@ -1,3 +1,7 @@
+#ifdef __linux__
+#include <SDL2/SDL.h>
+#endif
+
 #include "menu.hpp"
 
 #include "../logger/logger.hpp"
@@ -9,13 +13,35 @@
 
 void Menu::Initialize()
 {
+    // Prepare style/font/etc here.
+    // It runs only once.
+
     SDK_INFO("Initialized menu!");
 }
 
 void Menu::Render()
 {
     if (ImGui::IsKeyPressed(ImGuiKey_Insert, false))
+    {
         g_showMenu = !g_showMenu;
+
+#ifdef __linux__
+        static SDL_bool bMouseLastState;
+        if (g_showMenu)
+        {
+            bMouseLastState = SDL_GetRelativeMouseMode();
+            SDL_SetRelativeMouseMode(SDL_FALSE);
+        }
+        else
+        {
+            SDL_SetRelativeMouseMode(bMouseLastState);
+        }
+#endif
+    }
+
+#ifdef __linux__
+    ImGui::GetIO().MouseDrawCursor = g_showMenu;
+#endif
 
     sdk::g_pInputSystem->EnableInput(!g_showMenu);
 

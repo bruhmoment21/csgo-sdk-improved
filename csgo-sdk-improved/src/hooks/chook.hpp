@@ -16,8 +16,13 @@ template <typename T> class CHook
     template <typename OriginalT, typename HookT>
     void Hook(OriginalT _pOriginalFn, HookT &pHookFn, const char *szFileName, int line)
     {
-        void *pOriginalFn = static_cast<void *>(_pOriginalFn);
+        if (this->m_pOriginalFn)
+        {
+            SDK_WARN("'{}:{}' tried hooking an already installed hook.", szFileName, line);
+            return;
+        }
 
+        void *pOriginalFn = static_cast<void *>(_pOriginalFn);
         if (!pOriginalFn)
         {
             SDK_ERROR("'{}:{}' tried hooking 0x0.", szFileName, line);

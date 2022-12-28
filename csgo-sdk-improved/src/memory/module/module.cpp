@@ -211,7 +211,10 @@ InterfaceReg *CModule::GetRegisterLinkedList(const char *szFileName, int line)
     if (!s_pInterfaceRegs)
         return nullptr;
 
-    return *reinterpret_cast<InterfaceReg **>(s_pInterfaceRegs);
+    SDK_Pointer rv{s_pInterfaceRegs};
+    rv.Deref(1);
+
+    return rv.GetAs<InterfaceReg *>(szFileName, line);
 #else
     void *pCreateInterface = this->GetProcAddress("CreateInterface");
     if (!pCreateInterface)

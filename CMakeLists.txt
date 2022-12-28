@@ -14,17 +14,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -fpermissive")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}")
 
-# These are for funchook
+# This is needed for funchook.
 add_compile_definitions(DISASM_DISTORM)
-add_compile_definitions(_GNU_SOURCE)
 
 file(GLOB_RECURSE SDK_SOURCES "${CMAKE_SOURCE_DIR}/csgo-sdk-improved/src/*.cpp")
 file(GLOB_RECURSE FUNCHOOK_SOURCES "${CMAKE_SOURCE_DIR}/csgo-sdk-improved/dependencies/funchook/*.c")
 file(GLOB_RECURSE IMGUI_SOURCES "${CMAKE_SOURCE_DIR}/csgo-sdk-improved/dependencies/imgui/*.cpp")
 
 # Remove Windows specific source files.
-list(REMOVE_ITEM SDK_SOURCES "${CMAKE_SOURCE_DIR}/csgo-sdk-improved/src/hooks/backend/platform/win32/directx9_hook.cpp")
-list(REMOVE_ITEM SDK_SOURCES "${CMAKE_SOURCE_DIR}/csgo-sdk-improved/src/hooks/backend/platform/win32/wndproc_hook.cpp")
+list(REMOVE_ITEM SDK_SOURCES "${CMAKE_SOURCE_DIR}/csgo-sdk-improved/src/hooks/backend/win32/directx9_hook.cpp")
+list(REMOVE_ITEM SDK_SOURCES "${CMAKE_SOURCE_DIR}/csgo-sdk-improved/src/hooks/backend/win32/wndproc_hook.cpp")
 
 list(REMOVE_ITEM FUNCHOOK_SOURCES "${CMAKE_SOURCE_DIR}/csgo-sdk-improved/dependencies/funchook/src/funchook_windows.c")
 
