@@ -2,3 +2,5 @@ obj/*
 .vs/*
 bin/*
 .vscode/*
+
+csgo-sdk-improved/dependencies/freetype-2.12.1/objs/*

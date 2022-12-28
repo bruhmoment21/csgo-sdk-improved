@@ -32,6 +32,7 @@
     <ClCompile Include="src\hooks\backend\win32\wndproc_hook.cpp" />
     <ClCompile Include="src\sdk\sdk.cpp" />
     <ClCompile Include="src\utils\utils.cpp" />
+    <ClCompile Include="dependencies\imgui\imgui_freetype.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\logger\logger.hpp" />
@@ -172,5 +173,7 @@
     <ClInclude Include="src\config\config.hpp" />
     <ClInclude Include="src\utils\utils.hpp" />
     <ClInclude Include="src\memory\module\sdk_pointer.hpp" />
+    <ClInclude Include="src\menu\fonts\cozette_bitmap.hpp" />
+    <ClInclude Include="dependencies\imgui\imgui_freetype.h" />
   </ItemGroup>
 </Project>

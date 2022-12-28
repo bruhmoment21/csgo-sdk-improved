@@ -4,17 +4,38 @@
 
 #include "menu.hpp"
 
+#include "fonts/cozette_bitmap.hpp"
+
 #include "../logger/logger.hpp"
 #include "../config/config.hpp"
 #include "../utils/utils.hpp"
 #include "../sdk/sdk.hpp"
 
 #include <imgui/imgui.h>
+#include <imgui/imgui_freetype.h>
 
 void Menu::Initialize()
 {
     // Prepare style/font/etc here.
     // It runs only once.
+
+    ImGuiIO &io = ImGui::GetIO();
+
+    ImVector<ImWchar> ranges;
+    ImFontGlyphRangesBuilder builder;
+
+    // Add your custom ranges right here.
+    // https://github.com/ocornut/imgui/blob/master/docs/FONTS.md#using-custom-glyph-ranges
+
+    builder.AddRanges(io.Fonts->GetGlyphRangesDefault());
+    builder.BuildRanges(&ranges);
+
+    ImFontConfig cfg{};
+    cfg.FontBuilderFlags = ImGuiFreeTypeBuilderFlags_Bitmap;
+
+    io.Fonts->Clear();
+    io.Fonts->AddFontFromMemoryCompressedBase85TTF(cozzete_bitmap_compressed_data_base85, 13.f, &cfg, ranges.Data);
+    io.Fonts->Build();
 
     SDK_INFO("Initialized menu!");
 }
@@ -44,7 +65,7 @@ void Menu::Render()
     io.ConfigFlags = oldCfgFlags;
 
     ImGui::ShowDemoWindow();
-    if (ImGui::Begin("sample window", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    if (ImGui::Begin(SDK_NAME " window", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
     {
         ImGui::Checkbox("Fake prime", &g_variables.fakePrime);
         if (ImGui::Button("Unload", {ImGui::CalcItemWidth(), 0.f}))
