@@ -4,7 +4,6 @@
     <ClCompile Include="src\entry\entry.cpp" />
     <ClCompile Include="src\entry\init.cpp" />
     <ClCompile Include="src\logger\logger.cpp" />
-    <ClCompile Include="src\memory\module\module.cpp" />
     <ClCompile Include="src\memory\memory.cpp" />
     <ClCompile Include="src\hooks\hooks.cpp" />
     <ClCompile Include="dependencies\funchook\src\decoder.c" />
@@ -34,6 +33,8 @@
     <ClCompile Include="src\utils\utils.cpp" />
     <ClCompile Include="dependencies\imgui\imgui_freetype.cpp" />
     <ClCompile Include="src\hooks\backend\render.cpp" />
+    <ClCompile Include="src\api\library\unload.cpp" />
+    <ClCompile Include="src\api\module\module.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\logger\logger.hpp" />
@@ -137,7 +138,6 @@
     <ClInclude Include="dependencies\spdlog\tweakme.h" />
     <ClInclude Include="dependencies\spdlog\version.h" />
     <ClInclude Include="src\defs.hpp" />
-    <ClInclude Include="src\memory\module\module.hpp" />
     <ClInclude Include="src\memory\memory.hpp" />
     <ClInclude Include="dependencies\stb\stb.hh" />
     <ClInclude Include="src\hooks\hooks.hpp" />
@@ -156,7 +156,6 @@
     <ClInclude Include="dependencies\funchook\src\textdefs.h" />
     <ClInclude Include="dependencies\funchook\src\wstring.h" />
     <ClInclude Include="dependencies\funchook\src\x86defs.h" />
-    <ClInclude Include="src\hooks\chook.hpp" />
     <ClInclude Include="src\sdk\vmt\vmt.hpp" />
     <ClInclude Include="dependencies\imgui\imconfig.h" />
     <ClInclude Include="dependencies\imgui\imgui.h" />
@@ -173,8 +172,10 @@
     <ClInclude Include="src\sdk\interfaces\isurface.hpp" />
     <ClInclude Include="src\config\config.hpp" />
     <ClInclude Include="src\utils\utils.hpp" />
-    <ClInclude Include="src\memory\module\sdk_pointer.hpp" />
     <ClInclude Include="src\menu\fonts\cozette_bitmap.hpp" />
     <ClInclude Include="dependencies\imgui\imgui_freetype.h" />
+    <ClInclude Include="src\api\hook\chook.hpp" />
+    <ClInclude Include="src\api\module\module.hpp" />
+    <ClInclude Include="src\api\sdk_pointer.hpp" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #include <Windows.h>
 #include <d3d9.h>
 
-#include "../../chook.hpp"
+#include "../../../api/hook/chook.hpp"
 
 #include "../../../logger/logger.hpp"
 #include "../../../sdk/vmt/vmt.hpp"
@@ -50,8 +50,8 @@ void SDK_HookGraphicsAPI()
     SDK_INFO("'{}:{}': g_pD3D: {}", FILE_AND_LINE, fmt::ptr(g_pD3D));
     SDK_INFO("'{}:{}': g_pd3dDevice: {}", FILE_AND_LINE, fmt::ptr(g_pd3dDevice));
 
-    void *pResentFn = vmt::GetVirtual(g_pd3dDevice, 16, FILE_AND_LINE);
-    void *pPresentFn = vmt::GetVirtual(g_pd3dDevice, 17, FILE_AND_LINE);
+    void *pResentFn = GET_VIRTUAL(g_pd3dDevice, 16);
+    void *pPresentFn = GET_VIRTUAL(g_pd3dDevice, 17);
 
     CleanupDeviceD3D9();
 
