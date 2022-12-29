@@ -3,6 +3,7 @@
 #include "../../defs.hpp"
 
 #define CALL_VIRTUAL(type, index, conv, ...) vmt::CallVirtual<type, conv>(index, FILE_AND_LINE, __VA_ARGS__)
+#define GET_VIRTUAL(pclass, index) vmt::GetVirtual(pclass, index, FILE_AND_LINE)
 
 namespace vmt
 {

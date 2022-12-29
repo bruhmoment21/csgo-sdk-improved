@@ -2,11 +2,10 @@
 
 #include <memory>
 
-#include "../logger/logger.hpp"
+#include "../../logger/logger.hpp"
 
 #include <funchook/src/funchook.h>
 
-// Hook context
 inline funchook_t *g_funchookCtx = nullptr;
 inline bool g_isShuttingDown = false;
 

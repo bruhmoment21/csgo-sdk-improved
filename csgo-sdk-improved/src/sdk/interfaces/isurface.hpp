@@ -9,4 +9,4 @@ class ISurface
     {
         return CALL_VIRTUAL(void, 66, vmt::THISCALL_CONV, this);
     }
-};
+} inline *g_pSurface;

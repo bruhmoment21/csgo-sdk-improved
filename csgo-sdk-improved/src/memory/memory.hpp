@@ -1,29 +1,24 @@
 #pragma once
 
-#include "module/module.hpp"
-
-struct CModulesContext;
+#include "../api/module/module.hpp"
 
 namespace Memory
 {
-    void InitializeModuleContext();
-    void InitializePointers();
-
-    CModulesContext *GetModulesContext();
-    void FreeModuleContext();
-
+    void Initialize();
     void Shutdown();
 
-    namespace Pointers
-    {
-        // Everything here should be inlined.
-        inline void *pPrimeFn;
-    } // namespace Pointers
+    // Everything below should be inlined.
+    inline void *pIsAccountPrimeFn;
 } // namespace Memory
 
 struct CModulesContext
 {
-    CModule g_client;
-    CModule g_inputsystem;
-    CModule g_surface;
+    static void Initialize();
+    static void Shutdown();
+    static CModulesContext *Get();
+
+    CModule client;
+    CModule inputsystem;
+    CModule surface;
+    CModule engine;
 };

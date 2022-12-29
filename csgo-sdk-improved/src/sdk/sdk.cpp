@@ -6,10 +6,11 @@
 
 void Interfaces::Initialize()
 {
-    CModulesContext *ctx = Memory::GetModulesContext();
+    CModulesContext *ctx = CModulesContext::Get();
     if (!ctx)
         return;
 
-    FIND_INTERFACE(g_pInputSystem, ctx->g_inputsystem, "InputSystemVersion001");
-    FIND_INTERFACE(g_pSurface, ctx->g_surface, "VGUI_Surface031");
+    FIND_INTERFACE(g_pInputSystem, ctx->inputsystem, "InputSystemVersion001");
+    FIND_INTERFACE(g_pSurface, ctx->surface, "VGUI_Surface031");
+    FIND_INTERFACE(g_pEngineClient, ctx->engine, "VEngineClient014");
 }

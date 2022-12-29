@@ -21,12 +21,13 @@ void InitializeSDK()
 
     auto start = std::chrono::high_resolution_clock::now();
 
-    Memory::InitializeModuleContext();
-    Memory::InitializePointers();
+    CModulesContext::Initialize();
+
+    Memory::Initialize();
     Interfaces::Initialize();
     Hooks::Initialize();
 
-    Memory::FreeModuleContext();
+    CModulesContext::Shutdown();
 
     auto finish = std::chrono::high_resolution_clock::now();
     auto ms_int = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);

@@ -8,47 +8,54 @@
 
 static CModulesContext *g_pModulesContext;
 
-void Memory::InitializeModuleContext()
+void Memory::Initialize()
 {
-    g_pModulesContext = new CModulesContext{};
-
-    g_pModulesContext->g_client = CModule{CLIENT_LIB};
-    g_pModulesContext->g_inputsystem = CModule{INPUTSYSTEM_LIB};
-    g_pModulesContext->g_surface = CModule{SURFACE_LIB};
-
-    SDK_INFO("Initialized module context!");
-}
-
-void Memory::InitializePointers()
-{
-    using namespace Pointers;
-
-    CModulesContext *ctx = Memory::GetModulesContext();
+    CModulesContext *ctx = CModulesContext::Get();
     if (!ctx)
         return;
 
 #ifdef __linux__
-    pPrimeFn = ctx->g_client.FindPattern(SIG_TO_ARRAY("E8 ? ? ? ? 89 C3 8B 85 ? ? ? ?"))
-                   .ToAbs(1, 0)
-                   .GetAs<decltype(pPrimeFn)>(FILE_AND_LINE);
+    pIsAccountPrimeFn = ctx->client.FindPattern(SIG_TO_ARRAY("E8 ? ? ? ? 89 C3 8B 85 ? ? ? ?"))
+                            .ToAbs(1, 0)
+                            .GetAs<decltype(pIsAccountPrimeFn)>(FILE_AND_LINE);
 #else
-    pPrimeFn = ctx->g_client.FindPattern(SIG_TO_ARRAY("E8 ? ? ? ? 88 46 14"))
-                   .ToAbs(1, 0)
-                   .GetAs<decltype(pPrimeFn)>(FILE_AND_LINE);
+    pIsAccountPrimeFn = ctx->client.FindPattern(SIG_TO_ARRAY("E8 ? ? ? ? 88 46 14"))
+                            .ToAbs(1, 0)
+                            .GetAs<decltype(pIsAccountPrimeFn)>(FILE_AND_LINE);
 #endif
 
     SDK_INFO("Initialized pointers!");
 }
 
-CModulesContext *Memory::GetModulesContext()
+void Memory::Shutdown()
+{
+    CModulesContext::Shutdown();
+
+    SDK_INFO("Shutdown memory!");
+}
+
+// CModulesContext implementation.
+void CModulesContext::Initialize()
+{
+    g_pModulesContext = new CModulesContext{};
+
+    g_pModulesContext->client = CModule{CLIENT_LIB};
+    g_pModulesContext->inputsystem = CModule{INPUTSYSTEM_LIB};
+    g_pModulesContext->surface = CModule{SURFACE_LIB};
+    g_pModulesContext->engine = CModule{ENGINE_LIB};
+
+    SDK_INFO("Initialized module context!");
+}
+
+CModulesContext *CModulesContext::Get()
 {
     SDK_ASSERT(g_pModulesContext != nullptr,
-               "Modules context not initialized.\n\tMake sure you've called Memory::InitializeModuleContext()");
+               "Modules context not initialized.\n\tMake sure you've called CModulesContext::Initialize()");
 
     return g_pModulesContext;
 }
 
-void Memory::FreeModuleContext()
+void CModulesContext::Shutdown()
 {
     if (g_pModulesContext)
     {
@@ -57,11 +64,4 @@ void Memory::FreeModuleContext()
 
         SDK_INFO("Freed module context!");
     }
-}
-
-void Memory::Shutdown()
-{
-    Memory::FreeModuleContext();
-
-    SDK_INFO("Shutdown memory!");
 }

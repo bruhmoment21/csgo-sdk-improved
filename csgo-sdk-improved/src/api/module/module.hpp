@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include <array>
 
-#include "sdk_pointer.hpp"
+#include "../sdk_pointer.hpp"
 
 class InterfaceReg;
 

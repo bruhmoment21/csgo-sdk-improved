@@ -33,6 +33,7 @@
 #define SERVERBROWSER_LIB WIN32_LINUX("serverbrowser.dll", "serverbrowser_client.so")
 #define INPUTSYSTEM_LIB WIN32_LINUX("inputsystem.dll", "inputsystem_client.so")
 #define SURFACE_LIB WIN32_LINUX("vguimatsurface.dll", "vguimatsurface_client.so")
+#define ENGINE_LIB WIN32_LINUX("engine.dll", "engine_client.so")
 
 // Internal
 

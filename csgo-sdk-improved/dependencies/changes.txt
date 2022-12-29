@@ -1,0 +1,9 @@
+https://github.com/ocornut/imgui/blob/v1.89.1/imgui.cpp#L1426
+changed to:
+    const ImGuiInputEvent* latest_event = nullptr;
+    it would crash when i moved the mouse sometimes.
+
+https://github.com/ocornut/imgui/blob/v1.89.1/backends/imgui_impl_sdl.cpp#L344
+changed to:
+    bd->MouseCanUseGlobalState = false;
+    mouse position would have been offset by a lot.

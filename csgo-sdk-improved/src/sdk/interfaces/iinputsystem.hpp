@@ -13,4 +13,4 @@ class IInputSystem
         return CALL_VIRTUAL(void, 11, vmt::THISCALL_CONV, this, bEnable);
 #endif
     }
-};
+} inline *g_pInputSystem;

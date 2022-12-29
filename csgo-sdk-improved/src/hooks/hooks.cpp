@@ -1,5 +1,6 @@
 #include "hooks.hpp"
-#include "chook.hpp"
+
+#include "../api/hook/chook.hpp"
 
 #include "../memory/memory.hpp"
 #include "../logger/logger.hpp"
@@ -19,7 +20,7 @@ static void FASTCALL_CALL hkLockCursor(HOOK_ARGS)
 {
     if (Menu::g_showMenu)
     {
-        return Interfaces::g_pSurface->UnlockCursor();
+        return g_pSurface->UnlockCursor();
     }
 
     return g_lockCursor.m_pOriginalFn(HOOK_CALL);
@@ -47,12 +48,9 @@ void Hooks::Initialize()
     ::SDK_HookInputAPI();
     ::SDK_HookGraphicsAPI();
 
-    void *pLockCursorFn = vmt::GetVirtual(Interfaces::g_pSurface, 67, FILE_AND_LINE);
-    void *pIsAccountPrimeFn = Memory::Pointers::pPrimeFn;
-
     // Hook functions right here.
-    g_lockCursor.Hook(pLockCursorFn, hkLockCursor, FILE_AND_LINE);
-    g_isAccountPrime.Hook(pIsAccountPrimeFn, hkIsAccountPrime, FILE_AND_LINE);
+    g_lockCursor.Hook(GET_VIRTUAL(g_pSurface, 67), hkLockCursor, FILE_AND_LINE);
+    g_isAccountPrime.Hook(Memory::pIsAccountPrimeFn, hkIsAccountPrime, FILE_AND_LINE);
 
     int rv = funchook_install(g_funchookCtx, 0);
     SDK_ASSERT(rv == FUNCHOOK_ERROR_SUCCESS, "funchook_install() failed!");

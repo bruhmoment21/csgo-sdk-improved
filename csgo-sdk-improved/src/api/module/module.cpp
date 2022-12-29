@@ -144,9 +144,9 @@ void CModule::ReleaseHandle()
 {
 #ifdef __linux__
     dlclose(this->m_handle);
-#endif
 
     SDK_INFO("Released '{}' handle!", fmt::ptr(this->m_handle));
+#endif
 }
 
 uintptr_t CModule::FindPatternEx(int *sigBytes, size_t sigSize)
