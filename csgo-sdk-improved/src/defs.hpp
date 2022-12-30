@@ -5,7 +5,10 @@
 // This is used everywhere in the SDK.
 #define SDK_NAME "csgo-sdk-improved"
 
-// Increases verbosity
+// Enables logging.
+#define SDK_ENABLE_ALL_LOGGING
+
+// Increases verbosity.
 #define SDK_ENABLE_VERBOSITY
 
 // Platform defines.
