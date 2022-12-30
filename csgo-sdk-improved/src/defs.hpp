@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef __linux__
+#include <signal.h>
+#endif
+
 #include <string.h>
 
 // This is used everywhere in the SDK.
