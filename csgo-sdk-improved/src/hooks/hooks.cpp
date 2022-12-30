@@ -49,7 +49,7 @@ void Hooks::Initialize()
     ::SDK_HookGraphicsAPI();
 
     // Hook functions right here.
-    g_lockCursor.Hook(GET_VIRTUAL(g_pSurface, 67), hkLockCursor, FILE_AND_LINE);
+    g_lockCursor.HookVirtual(g_pSurface, 67, hkLockCursor, FILE_AND_LINE);
     g_isAccountPrime.Hook(Memory::pIsAccountPrimeFn, hkIsAccountPrime, FILE_AND_LINE);
 
     int rv = funchook_install(g_funchookCtx, 0);

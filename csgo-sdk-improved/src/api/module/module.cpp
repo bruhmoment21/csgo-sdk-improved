@@ -131,6 +131,10 @@ void *CModule::GetProcAddress(const char *lpProcName)
 {
     void *rv = nullptr;
 
+    SDK_ASSERT(this->IsLoaded(), "Can't call CModule::GetProcAddress() on modules that are not loaded.");
+    if (!this->IsLoaded())
+        return rv;
+
 #ifdef __linux__
     rv = ::dlsym(this->m_handle, lpProcName);
 #else
@@ -152,6 +156,8 @@ void CModule::ReleaseHandle()
 uintptr_t CModule::FindPatternEx(int *sigBytes, size_t sigSize)
 {
     uintptr_t rv = 0;
+
+    SDK_ASSERT(this->IsLoaded(), "Can't call CModule::FindPatternEx() on modules that are not loaded.");
     if (!this->IsLoaded())
         return rv;
 
@@ -181,6 +187,10 @@ uintptr_t CModule::FindPatternEx(int *sigBytes, size_t sigSize)
 uintptr_t CModule::FindInterfaceEx(const char *szInterfaceName, const char *szFileName, int line)
 {
     uintptr_t rv = 0;
+
+    SDK_ASSERT(this->IsLoaded(), "Can't call CModule::FindInterfaceEx() on modules that are not loaded.");
+    if (!this->IsLoaded())
+        return rv;
 
     for (InterfaceReg *pRegList = this->GetRegisterLinkedList(szFileName, line); pRegList; pRegList = pRegList->m_pNext)
     {

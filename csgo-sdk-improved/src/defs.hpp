@@ -8,6 +8,9 @@
 // Enables logging.
 #define SDK_ENABLE_ALL_LOGGING
 
+// Enables asserts. (Will crash if debugger not present.)
+#define SDK_ENABLE_ASSERTS
+
 // Increases verbosity.
 #define SDK_ENABLE_VERBOSITY
 
@@ -18,11 +21,15 @@
 // Mostly used in methods hooks.
 #define HOOK_ARGS void *ecx
 #define HOOK_CALL ecx
+
+#define SDK_DEBUG_BREAK() raise(SIGTRAP)
 #else
 #define WIN32_LINUX(x, y) x
 
 #define HOOK_ARGS void *ecx, void *edx
 #define HOOK_CALL ecx, edx
+
+#define SDK_DEBUG_BREAK() __debugbreak()
 #endif
 
 // Calling conventions

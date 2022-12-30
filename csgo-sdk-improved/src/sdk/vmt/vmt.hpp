@@ -3,7 +3,6 @@
 #include "../../defs.hpp"
 
 #define CALL_VIRTUAL(type, index, conv, ...) vmt::CallVirtual<type, conv>(index, FILE_AND_LINE, __VA_ARGS__)
-#define GET_VIRTUAL(pclass, index) vmt::GetVirtual(pclass, index, FILE_AND_LINE)
 
 namespace vmt
 {
@@ -15,6 +14,7 @@ namespace vmt
         THISCALL_CONV
     };
 
+    // Pass FILE_AND_LINE as the last 2 arguments.
     void *GetVirtual(void *pClass, int index, const char *szFilePath, int line);
 
     template <typename T, ECallingConvention Convention, typename... Args>
