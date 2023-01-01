@@ -56,13 +56,12 @@ void Menu::Render()
 
     // This fixes a glitch where sometimes your cursor will appear when moving mouse fast.
     ImGuiIO &io = ImGui::GetIO();
-    ImGuiConfigFlags oldCfgFlags = io.ConfigFlags;
-    io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+    io.ConfigFlags = ImGuiConfigFlags_NoMouseCursorChange;
 
     if (!g_showMenu)
         return;
 
-    io.ConfigFlags = oldCfgFlags;
+    io.ConfigFlags = ImGuiConfigFlags_None;
 
     ImGui::ShowDemoWindow();
     if (ImGui::Begin(SDK_NAME " window", nullptr, ImGuiWindowFlags_AlwaysAutoResize))

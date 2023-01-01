@@ -304,6 +304,7 @@
     <ClInclude Include="src\sdk\classes\tier1\interface.hpp" />
     <ClInclude Include="src\sdk\interfaces\iinputsystem.hpp" />
     <ClInclude Include="src\sdk\interfaces\isurface.hpp" />
+    <ClInclude Include="src\sdk\interfaces\ivengineclient.hpp" />
     <ClInclude Include="src\sdk\sdk.hpp" />
     <ClInclude Include="src\sdk\vmt\vmt.hpp" />
     <ClInclude Include="src\utils\utils.hpp" />

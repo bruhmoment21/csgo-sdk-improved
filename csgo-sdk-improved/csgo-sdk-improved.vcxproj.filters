@@ -177,5 +177,6 @@
     <ClInclude Include="src\api\hook\chook.hpp" />
     <ClInclude Include="src\api\module\module.hpp" />
     <ClInclude Include="src\api\sdk_pointer.hpp" />
+    <ClInclude Include="src\sdk\interfaces\ivengineclient.hpp" />
   </ItemGroup>
 </Project>
