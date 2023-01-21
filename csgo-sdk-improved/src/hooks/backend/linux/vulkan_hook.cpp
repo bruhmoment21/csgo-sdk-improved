@@ -12,7 +12,7 @@
 static VkAllocationCallbacks *g_Allocator = NULL;
 static VkInstance g_Instance = VK_NULL_HANDLE;
 static VkPhysicalDevice g_PhysicalDevice = VK_NULL_HANDLE;
-static VkDevice g_FakeDevice = VK_NULL_HANDLE, g_Device = VK_NULL_HANDLE;
+static VkDevice g_Device = VK_NULL_HANDLE;
 static uint32_t g_QueueFamily = (uint32_t)-1;
 static VkPipelineCache g_PipelineCache = VK_NULL_HANDLE;
 static VkDescriptorPool g_DescriptorPool = VK_NULL_HANDLE;
@@ -24,7 +24,7 @@ static VkExtent2D g_ImageExtent = {};
 // Defined in 'render.cpp'.
 void SDK_OnRender();
 
-static bool CreateDeviceVK();
+static void InitializeVulkanContext();
 static void CleanupDeviceVulkan();
 static void CleanupRenderTarget();
 static void RenderImGui_Vulkan(VkQueue queue, const VkPresentInfoKHR *pPresentInfo);
@@ -68,22 +68,10 @@ static VkResult VKAPI_CALL hkPresentImage(HOOK_ARGS)
         uintptr_t m_vkd = *reinterpret_cast<uintptr_t *>(reinterpret_cast<uintptr_t>(ecx) + 0x10);
         if (m_vkd)
         {
-            if (!CreateDeviceVK())
-            {
-                SDK_ERROR("CreateDeviceVK() failed.");
-                return g_presentImage.m_pOriginalFn(HOOK_CALL);
-            }
-
             // Found these with IDA in 'libdxvk_d3d9.so'.
             void *pAcquireNextImageKHRFn = *reinterpret_cast<void **>(m_vkd + 0x458);
             void *pQueuePresentKHRFn = *reinterpret_cast<void **>(m_vkd + 0x460);
             void *pCreateSwapchainKHRFn = *reinterpret_cast<void **>(m_vkd + 0x440);
-
-            if (g_FakeDevice)
-            {
-                vkDestroyDevice(g_FakeDevice, g_Allocator);
-                g_FakeDevice = NULL;
-            }
 
             // This will happen after funchook is installed so
             // we need to uninstall it and reinstall it right after.
@@ -140,6 +128,8 @@ void SDK_HookVulkanAPI(CModule *pLibdxvk_d3d9)
     // 2. Get 'DeviceFn' pointer.
     // 3. Hook wanted functions.
 
+    InitializeVulkanContext();
+
     void *pPresentImageFn = pLibdxvk_d3d9->GetProcAddress("_ZN4dxvk2vk9Presenter12presentImageEv");
     g_presentImage.Hook(pPresentImageFn, hkPresentImage, FILE_AND_LINE);
 }
@@ -161,12 +151,8 @@ void SDK_UnhookVulkanAPI()
     CleanupDeviceVulkan();
 }
 
-static bool CreateDeviceVK()
+static void InitializeVulkanContext()
 {
-    // Don't create a device 2 times.
-    if (g_FakeDevice)
-        return true;
-
     // Create Vulkan Instance
     {
         VkInstanceCreateInfo create_info = {};
@@ -224,29 +210,6 @@ static bool CreateDeviceVK()
         delete[] queues;
         IM_ASSERT(g_QueueFamily != (uint32_t)-1);
     }
-
-    // Create Logical Device (with 1 queue)
-    {
-        constexpr const char *device_extension = "VK_KHR_swapchain";
-        constexpr const float queue_priority = 1.0f;
-
-        VkDeviceQueueCreateInfo queue_info = {};
-        queue_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-        queue_info.queueFamilyIndex = g_QueueFamily;
-        queue_info.queueCount = 1;
-        queue_info.pQueuePriorities = &queue_priority;
-
-        VkDeviceCreateInfo create_info = {};
-        create_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-        create_info.queueCreateInfoCount = 1;
-        create_info.pQueueCreateInfos = &queue_info;
-        create_info.enabledExtensionCount = 1;
-        create_info.ppEnabledExtensionNames = &device_extension;
-
-        vkCreateDevice(g_PhysicalDevice, &create_info, g_Allocator, &g_FakeDevice);
-    }
-
-    return true;
 }
 
 static void CreateRenderTarget(VkDevice device, VkSwapchainKHR swapchain)
